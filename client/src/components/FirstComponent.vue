@@ -7,14 +7,14 @@
         <p>Type the data you want to send to your CLP</p>
         <div class="send-input-container">
           <textarea id="send-data-input" type="text" v-model="message"></textarea>
-          <button class="send-data-button" @click="handleSubmit">
+          <button class="send-data-button" @click="sendMessage">
             Send!
           </button>
         </div>
       </div>
       <div class="receive-data">
         <h2>Receive Data</h2>
-        <button class="receive-data-button">
+        <button class="receive-data-button" @click="getMessage">
           Check for data from CLP!
         </button>
         <div :class="{ hasData: hasDataFromCLP }">
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import CLPService from '@/services/CLPService';
+
 export default {
   name: 'FirstComponent',
   data: function() {
@@ -40,8 +42,14 @@ export default {
     }
   },
   methods: {
-    handleSubmit: function() {
-      console.log(this.message)
+    sendMessage: function() {
+      if(this.message) CLPService.sendCLPMessage(this.message);
+    },
+    getMessage: function () {
+      CLPService.getCLPMessage()
+        .then(response => {
+          if(response) this.dataFromCLP = response;
+        })
     }
   }
 }

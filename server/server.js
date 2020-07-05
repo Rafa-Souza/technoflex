@@ -9,11 +9,16 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/clp-message', (req, res) => {
-    res.send('test message');
+    // Logic to get the message from the CLP
+    const message = 'Test message';
+    console.log(`Sending message: ${message}`)
+    res.send(message);
 });
 
 app.post('/clp-message', (req, res) => {
-    console.log(req.body.message);
+    // Logic to send message to CLP
+    const message = req.body.message
+    console.log(`Message received: ${message}`);
 });
 
 // listen on the port
